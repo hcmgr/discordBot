@@ -29,7 +29,6 @@ const eroticTale = "--erotictale"
 //miscellaneous bullshit
 const bannedPhrases = ["bibby", "bubby", "rackers sucks", "skan", "elon is not good", "get sick", "among us", "nick"]
 const birdIsTheWordLink = "https://www.youtube.com/watch?v=9Gc4QTqslN4&ab_channel=VDJMikeyMike";
-const bruhLink = "https://www.youtube.com/watch?v=2ZIpFytCSVc"
 const tunukTun = "https://www.youtube.com/watch?v=vTIIMJ9tUc8&ab_channel=SonyMusicIndiaVEVO"
 const openaiModel = "text-davinci-002"
 const imagePrompts = ["giggy", "tucker"]
@@ -168,21 +167,6 @@ function skip(connection, player, server){
 		connection.disconnect()
 		playing = false
 	}
-/* 	else {
-		if (!playing){
-			//very hacky way of disconnecting the bot
-			//just trust it works if you're reading over this in the future
-			//root problem is that the bot keeps using the previous connection
-			//thus, its trying to destroy a connection that has already been destroyed
-			connections[connections.length-1].destroy()
-			if (connections.length > 2){
-				connections = []
-			}
-			connection.destroy()
-			connectionDestroyed = true
-
-		}
-	} */
 }
 
 function getTokens(string){
