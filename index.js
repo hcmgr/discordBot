@@ -133,7 +133,6 @@ Each object is of form:
 		-dispatcher is a callback function to play the song
 */
 const servers = {}
-let connectionDestroyed = false
 let connection = null
 const player = voiceDiscord.createAudioPlayer();
 let playing = false;
@@ -143,9 +142,8 @@ client.on('ready', function(){
 	console.log('client is ready')
 })
 
-let connections = []
 
-async function play(connection, player, server){
+function play(connection, player, server){
 	playing = true
 	const resource = voiceDiscord.createAudioResource(ytdl(server.queue[0], {filter: 'audioonly'}))
 	player.play(resource)
@@ -154,12 +152,13 @@ async function play(connection, player, server){
 	server.queue.shift()
 
 	player.on(voiceDiscord.AudioPlayerStatus.Idle, () => {
+		console.log("ummm")
 		playing = false
 		skip(connection, player, server)
 	})
 }
 
-function skip(connection, player, server, songFinish = true){
+function skip(connection, player, server){
 	//song queued
 	if (server.queue[0]){
 		play(connection, player, server)
@@ -167,6 +166,7 @@ function skip(connection, player, server, songFinish = true){
 	//queue empty
 	else {
 		connection.disconnect()
+		playing = false
 	}
 /* 	else {
 		if (!playing){
@@ -239,22 +239,11 @@ client.on("messageCreate", async function(msg){
 				}
 
 				//bot not connected (no song currently playing)
-				if (!client.voice.adapters.has(msg.guild.id)){
+				if (!playing){
+					console.log("reached here", playing)
 					connection = createConnection(voiceChannel, msg);
-					connections.push(connection)
-					connection.joinConfig.selfDeaf = false
-					connectionDestroyed = false
 					play(connection, player, server)
 				}
-
-				//bot not connected (no song currently playing)
-/* 				if (!playing){
-					connection = createConnection(voiceChannel, msg);
-					connections.push(connection)
-					connection.joinConfig.selfDeaf = false
-					connectionDestroyed = false
-					play(connection, player, server)
-				} */
 				break;
 
 			case pauseCmd:
