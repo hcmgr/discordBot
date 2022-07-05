@@ -224,7 +224,6 @@ client.on("messageCreate", async function(msg){
 
 				//bot not connected (no song currently playing)
 				if (!playing){
-					console.log("reached here", playing)
 					connection = createConnection(voiceChannel, msg);
 					play(connection, player, server)
 				}
