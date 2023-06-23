@@ -151,6 +151,7 @@ function play(connection, player, server){
 	server.queue.shift()
 
 	player.on(voiceDiscord.AudioPlayerStatus.Idle, () => {
+		console.log("skipped")
 		playing = false
 		skip(connection, player, server)
 	})

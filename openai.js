@@ -5,7 +5,7 @@ const configuration = new Configuration({
   });
 const openai = new OpenAIApi(configuration);
 
-function createOptions(model, prompt, max_tokens = 200, temperature = 1, echo = false){
+function createOptions(model, prompt, max_tokens = 2000, temperature = 1, echo = false){
 	return {
 		model: model,
 		prompt: prompt, 
@@ -22,12 +22,10 @@ async function apiCall(options){
 	return response
 }
 
-async function test(){
-	const result = await apiCall(createOptions("text-davinci-002", "write a funny 4chan post \n >be me, two VHC copies of good fellas"))
-	console.log(result.data)
-}
-
-//test();
+// async function test(){
+// 	const result = await apiCall(createOptions("text-davinci-002", "write a funny 4chan post \n >be me, two VHC copies of good fellas"))
+// 	console.log(result.data)
+// }
 
 module.exports = {
 	apiCall,
